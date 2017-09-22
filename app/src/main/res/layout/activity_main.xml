@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4dd2ff"
+    tools:context="com.example.ahmed.selfiecompetition.MainActivity"
+    android:id="@+id/rlMainContainer"
+    >
+
+
+
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:orientation="vertical">
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="#00bfff"
+               android:padding="10dp"
+               android:text="Find out whose selfies are better. You or your friends"
+               android:textColor="#FFFFFF"
+               android:textSize="20sp"
+               android:textStyle="bold|italic"
+               />
+           <Spinner
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/spinner"
+               />
+           <TextView
+               android:id="@+id/tvPhoneNumber"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_centerInParent="true"
+               android:layout_margin="5dp"
+               android:gravity="center"
+               android:text="Enter your phone number"
+               android:textColor="#FFFFFF"
+               android:textSize="20sp"
+               android:textStyle="bold"
+
+               />
+
+           <android.support.design.widget.TextInputLayout
+               android:id="@+id/textInLayout"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="5dp"
+               android:textColorHint="#FFFFFF"
+               android:textColor="#FFFFFF"
+               android:hint="Phone number"
+               >
+               <EditText
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:inputType="phone"
+                   android:padding="10dp"
+                   android:textStyle="bold"
+
+                   />
+           </android.support.design.widget.TextInputLayout>
+
+           <Button
+               android:id="@+id/btnLogin"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_margin="10dp"
+               android:background="@drawable/round_btn"
+               android:onClick="BtnLogin"
+               android:padding="10dp"
+               android:text="Start Competition, Now"
+               android:textAllCaps="true"
+               android:textColor="#FFFFFF"
+               android:textSize="17sp"
+               android:textStyle="bold" />
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center"
+               >
+
+               <de.hdodenhof.circleimageview.CircleImageView
+                   android:layout_width="100dp"
+                   android:layout_height="100dp"
+                   android:layout_margin="5dp"
+                   android:src="@drawable/selfie1"
+                   />
+
+               <de.hdodenhof.circleimageview.CircleImageView
+                   android:id="@+id/circleImageView"
+                   android:layout_width="100dp"
+                   android:layout_height="100dp"
+                   android:layout_margin="5dp"
+                   android:src="@drawable/selfie2"
+
+                   />
+
+               <de.hdodenhof.circleimageview.CircleImageView
+                   android:layout_width="100dp"
+                   android:layout_height="100dp"
+                   android:layout_alignParentEnd="true"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignTop="@+id/circleImageView"
+                   android:layout_margin="5dp"
+                   android:src="@drawable/selfie3"
+
+                   />
+           </LinearLayout>
+
+       </LinearLayout>
+   </ScrollView>
+
+
+</RelativeLayout>

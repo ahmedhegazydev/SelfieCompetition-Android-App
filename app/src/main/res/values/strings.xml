@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SelfieCompetition</string>
+    <string name="instant_validation">(instant validation)</string>
+
+
+    <string-array name="nav_item_activity_titles">
+        <item>All Selfies</item>
+        <item>My Selfies</item>
+        <item>Favorites</item>
+        <item>Uploaded Selfies</item>
+    </string-array>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_all_selfies">All Selfies</string>
+    <string name="nav_my_selfies">Own Selfies</string>
+    <string name="nav_favs">Favorites</string>
+    <string name="nav_uploaded_images">Uploaded Selfies</string>
+
+
+</resources>

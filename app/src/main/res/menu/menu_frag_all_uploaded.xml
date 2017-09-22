@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:title="Clear All"
+        android:id="@+id/clearAll"
+        />
+
+    <item
+        android:id="@+id/showAsListView"
+        android:icon="@drawable/listview"
+        android:title="ListView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/showAsGridView"
+        android:icon="@drawable/gridview"
+        android:title="GridView"
+        app:showAsAction="always" />
+    <!--<item-->
+        <!--android:id="@+id/add_new_image"-->
+        <!--android:icon="@drawable/add_image"-->
+        <!--android:title="Add New Selfie"-->
+        <!--app:showAsAction="always" />-->
+
+
+
+</menu>

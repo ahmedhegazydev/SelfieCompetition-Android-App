@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "1040730222293",
+    "firebase_url": "https://selfie-competition-app-201300.firebaseio.com",
+    "project_id": "selfie-competition-app-201300",
+    "storage_bucket": "selfie-competition-app-201300.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040730222293:android:3a3160a8c79da255",
+        "android_client_info": {
+          "package_name": "com.example.ahmed.selfiecompetition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1040730222293-92l5h6cu0gnc3ibfil8i4bsicpl370l5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ahmed.selfiecompetition",
+            "certificate_hash": "c975c4e3aef4625255bfe0f0b8475ff04b6d5797"
+          }
+        },
+        {
+          "client_id": "1040730222293-a52pdnrtriuv9i5ugjqfq3hkq6apqg4n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAki3W4YOAC7Xtr_E7tYtD-1UUQGqm_AJc"
+        },
+        {
+          "current_key": "AIzaSyAwS4-L5J_HE9jOR3rbdhoKtgkpjIwzt5g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1040730222293-a52pdnrtriuv9i5ugjqfq3hkq6apqg4n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
