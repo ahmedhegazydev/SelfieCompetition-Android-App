@@ -5,7 +5,7 @@
 
     <string-array name="nav_item_activity_titles">
         <item>All Selfies</item>
-        <item>My Selfies</item>
+        <item>Add New Selfies</item>
         <item>Favorites</item>
         <item>Uploaded Selfies</item>
     </string-array>
@@ -19,7 +19,7 @@
 
     <!-- Navigation Drawer menu labels -->
     <string name="nav_all_selfies">All Selfies</string>
-    <string name="nav_my_selfies">Own Selfies</string>
+    <string name="nav_add_new_selfies">Add New Selfies</string>
     <string name="nav_favs">Favorites</string>
     <string name="nav_uploaded_images">Uploaded Selfies</string>
 

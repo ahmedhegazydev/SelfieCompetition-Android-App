@@ -31,6 +31,7 @@ import com.example.ahmed.selfiecompetition.HomeActivity;
 import com.example.ahmed.selfiecompetition.ImageUploadInfo;
 import com.example.ahmed.selfiecompetition.MainActivity;
 import com.example.ahmed.selfiecompetition.R;
+import com.example.ahmed.selfiecompetition.model.SelfieItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -190,6 +191,13 @@ public class FragmentAddNewSelfies extends Fragment /*implements ViewPager.OnPag
         }
     }
 
+
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor = null;
+    String keyImagesUploaded = "", keyFavImages = "";
+    String enteredPhoneNumber = null;
+    String imgDownloadedUrl = "";
+
     class AddingNewItem implements View.OnClickListener {
         LinearLayout linearLayout = null;
         Context context = null;
@@ -200,6 +208,7 @@ public class FragmentAddNewSelfies extends Fragment /*implements ViewPager.OnPag
         Button btnUpload = null;
         DatabaseReference databaseReference = null;
         String fileName = null;
+        ImageUploadInfo imageUploadInfo = null;
 
         public AddingNewItem(Context context, LinearLayout linearLayout, Uri filePath) {
             this.context = context;
@@ -235,9 +244,6 @@ public class FragmentAddNewSelfies extends Fragment /*implements ViewPager.OnPag
             uploadImg();
         }
 
-        SharedPreferences sharedPreferences = null;
-        SharedPreferences.Editor editor = null;
-        String keyImagesUploaded = "", keyFavImages = "";
 
         private void uploadImg() {
             pdUploadingImageToStorage = createProgressDialog(context, "Uploading .... ");
@@ -246,36 +252,21 @@ public class FragmentAddNewSelfies extends Fragment /*implements ViewPager.OnPag
             //creating reference to firebase storage
             storage = FirebaseStorage.getInstance();
             storageRef = storage.getReferenceFromUrl("gs://selfie-competition-app-201300.appspot.com/");    //change the url according to your firebase app
-            // Assign FirebaseDatabase instance with root database name.
-            databaseReference = FirebaseDatabase.getInstance().getReference("selfie-competition-app-201300");
-
             if (filePath != null) {
                 Date date = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-                fileName = dateFormat.format(date);
-                StorageReference childRef = storageRef.child("image_" + fileName + ".jpg");
+                fileName = "image_" + dateFormat.format(date) + ".jpg";
+                //StorageReference childRef = storageRef.child(enteredPhoneNumber).child("image_" + fileName + ".jpg");
+                StorageReference childRef = storageRef.child(fileName);
                 //uploading the image
                 UploadTask uploadTask = childRef.putFile(filePath);
                 uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                        ImageUploadInfo imageUploadInfo = new ImageUploadInfo(fileName, taskSnapshot.getDownloadUrl().toString());
-                        // Getting image upload ID.
-                        String ImageUploadId = databaseReference.push().getKey();
-
-                        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        editor = sharedPreferences.edit();
-                        if (sharedPreferences.contains(MainActivity.KEY_IMAGES_UPLOADED)) {
-                            keyImagesUploaded = sharedPreferences.getString(MainActivity.KEY_IMAGES_UPLOADED, "");
-                        }
-                        if (sharedPreferences.contains(MainActivity.KEY_IMAGES_FAV)) {
-                            keyFavImages = sharedPreferences.getString(MainActivity.KEY_IMAGES_FAV, "");
-
-                        }
-                        if (TextUtils.isEmpty())
-
-
+                        imgDownloadedUrl = taskSnapshot.getDownloadUrl().toString();
+                        imageUploadInfo = new ImageUploadInfo(fileName, imgDownloadedUrl);
+                        addImgUrlToDbRef();//for the user
+                        addImgUrlToDbRefFroAllUser();//shown for all users
                         if (pdUploadingImageToStorage.isShowing())
                             pdUploadingImageToStorage.dismiss();
                         Toast.makeText(context, "Upload successful", Toast.LENGTH_SHORT).show();
@@ -295,9 +286,48 @@ public class FragmentAddNewSelfies extends Fragment /*implements ViewPager.OnPag
 
             }
 
+        }
+
+        private void addImgUrlToDbRef() {
+            //sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            sharedPreferences = getActivity().getSharedPreferences(MainActivity.KEY_PHONE_NUMBER, MainActivity.MODE);
+            editor = sharedPreferences.edit();
+//                        if (sharedPreferences.contains(MainActivity.KEY_IMAGES_UPLOADED)) {
+//                            keyImagesUploaded = sharedPreferences.getString(MainActivity.KEY_IMAGES_UPLOADED, "");
+//                        }
+//                        if (sharedPreferences.contains(MainActivity.KEY_IMAGES_FAV)) {
+//                            keyFavImages = sharedPreferences.getString(MainActivity.KEY_IMAGES_FAV, "");
+//                        }
+
+            if (sharedPreferences.contains(MainActivity.KEY_PHONE_NUMBER)) {
+                enteredPhoneNumber = sharedPreferences.getString(MainActivity.KEY_PHONE_NUMBER, "");
+                //if (!TextUtils.isEmpty(keyFavImages)){}
+                // Assign FirebaseDatabase instance with root database name.
+                //databaseReference = FirebaseDatabase.getInstance().getReference("selfie-competition-app-201300");
+                //databaseReference = FirebaseDatabase.getInstance().getReference();//root
+                //if (!TextUtils.isEmpty(keyImagesUploaded)) {
+                // Getting image upload ID.
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(enteredPhoneNumber).child("uploadedImages");
+                String imageUploadId = reference.push().getKey();
+                reference.child(imageUploadId).setValue(imageUploadInfo);
+                //}
+                Toast.makeText(context, enteredPhoneNumber, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Phone number Not found !!! ", Toast.LENGTH_SHORT).show();
+            }
 
         }
 
+
+    }
+
+    private void addImgUrlToDbRefFroAllUser() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("allSelfiesComponents");
+        String key = ref.push().getKey();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        ref.child(key).setValue(new SelfieItem(0, imgDownloadedUrl, new ArrayList<String>(), dateFormat.format(date).toString(), "iamge"));
 
     }
 

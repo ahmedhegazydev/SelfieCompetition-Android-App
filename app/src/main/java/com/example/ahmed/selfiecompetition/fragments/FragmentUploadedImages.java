@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,10 +26,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.bumptech.glide.Glide;
 import com.example.ahmed.selfiecompetition.ImageUploadInfo;
+import com.example.ahmed.selfiecompetition.MainActivity;
 import com.example.ahmed.selfiecompetition.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -139,14 +144,17 @@ public class FragmentUploadedImages extends Fragment /*implements ViewPager.OnPa
         rlMainContainer = (RelativeLayout) viewRoot;
 
 
+        sharedPreferences = getActivity().getSharedPreferences(MainActivity.KEY_PHONE_NUMBER, MainActivity.MODE);
+        editor = sharedPreferences.edit();
+
+
         listViewAllUploadedImgs = new ListView(getContext());
         listViewAllUploadedImgs.setDividerHeight(2);
         int[] colors = {0, 0xFFFF0000, 0}; // red for the example
         //listViewAllUploadedImgs.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
         listViewAllUploadedImgs.setDivider(new ColorDrawable(getActivity().getResources().getColor(R.color.colorBlue2)));
         rlMainContainer.addView(listViewAllUploadedImgs);
-        gettingAllImagesIntoList();
-
+        checkIfRefExistsOrNot();
 
         animLTR = AnimationUtils.loadAnimation(getContext(), R.anim.slide_to_right);
         animRTL = AnimationUtils.loadAnimation(getContext(), R.anim.slide_to_left);
@@ -154,13 +162,46 @@ public class FragmentUploadedImages extends Fragment /*implements ViewPager.OnPa
 
     }
 
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor = null;
+    String enteredPhoneNumber = null;
+
+    private void checkIfRefExistsOrNot() {
+
+
+        if (sharedPreferences.contains(MainActivity.KEY_PHONE_NUMBER)) {
+            enteredPhoneNumber = sharedPreferences.getString(MainActivity.KEY_PHONE_NUMBER, "");
+            if (TextUtils.isEmpty(enteredPhoneNumber)) {
+                //Toast.makeText(context, "no phone number found !!!!", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                //Toast.makeText(context, "Phone nummber  = " + enteredPhoneNumber, Toast.LENGTH_SHORT).show();
+            }
+        }
+        //otherwise
+
+        //https://stackoverflow.com/questions/37397205/google-firebase-check-if-child-exists
+        final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child(enteredPhoneNumber);
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("uploadedImages")) {
+                    databaseReference = rootRef.child("uploadedImages");
+                    gettingAllImagesIntoList();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     private void gettingAllImagesIntoList() {
         pdGettingAllImages = createProgressDialog(getActivity(), "Loading Images ...");
         // Showing progress dialog.
         pdGettingAllImages.show();
-        // Setting up Firebase image upload folder path in databaseReference.
-        // The path is already defined in MainActivity.
-        databaseReference = FirebaseDatabase.getInstance().getReference("selfie-competition-app-201300");
         // Adding Add Value Event Listener to databaseReference.
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -359,11 +400,13 @@ public class FragmentUploadedImages extends Fragment /*implements ViewPager.OnPa
         public View getView(int position, View convertView, ViewGroup parent) {
 
             View view = LayoutInflater.from(context).inflate(R.layout.list_image_item, null);
-            ImageView ivDisplayed = (ImageView) view.findViewById(R.id.downloadedImg);
+
             ImageUploadInfo imageUploadInfo = getItem(position);
 
+            ImageView ivDisplayed = (ImageView) view.findViewById(R.id.downloadedImg);
             //Loading image from Glide library.
             Glide.with(context).load(imageUploadInfo.getImageURL()).into(ivDisplayed);
+
 
             return view;
         }

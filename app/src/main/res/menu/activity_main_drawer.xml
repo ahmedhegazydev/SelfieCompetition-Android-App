@@ -7,9 +7,9 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/nav_all_selfies" />
         <item
-            android:id="@+id/nav_my_selfies"
+            android:id="@+id/nav_add_new_selfies"
             android:icon="@drawable/ic_photo_library_black_24dp"
-            android:title="@string/nav_my_selfies" />
+            android:title="@string/nav_add_new_selfies" />
         <item
             android:id="@+id/nav_favs"
             android:icon="@drawable/ic_local_movies_black_24dp"

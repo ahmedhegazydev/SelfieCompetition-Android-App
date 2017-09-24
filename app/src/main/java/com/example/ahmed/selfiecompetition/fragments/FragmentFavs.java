@@ -35,7 +35,7 @@ public class FragmentFavs extends Fragment /*implements ViewPager.OnPageChangeLi
         context = getActivity();
         context = container.getContext();
 
-        viewRoot = inflater.inflate(R.layout.frag_my_selfies, container, false);
+        viewRoot = inflater.inflate(R.layout.frag_fav_images, container, false);
 
 
         //indicators = getActivity().getResources().getStringArray(R.array.frag_say_hi);

@@ -239,8 +239,8 @@ public class MainActivity extends AppCompatActivity {
         return progressDialog;
     }
 
-    final static int MODE =  Context.MODE_PRIVATE;
-    final static String KEY_PHONE_NUMBER = "PHONE_NUMBER";
+    public final static int MODE = Context.MODE_PRIVATE;
+    public final static String KEY_PHONE_NUMBER = "PHONE_NUMBER";
     public final static String KEY_IMAGES_UPLOADED = "KEY_IMAGES_UPLOADED";
     public final static String KEY_IMAGES_FAV = "KEY_IMAGES_FAV";
     SharedPreferences sharedPreferences = null;
@@ -257,16 +257,18 @@ public class MainActivity extends AppCompatActivity {
 
                             //adding a unique user id that contains his all own uploaded imaged
 
-                            firebaseDatabase = FirebaseDatabase.getInstance();
-                            databaseReference = firebaseDatabase.getReference().child(etPhoneNumber.getText().toString());
-                            String keyUploadedImages = databaseReference.child("uploadedImages").push().getKey();
-                            String keyFavImages= databaseReference.child("favImages").push().getKey();
+//                            firebaseDatabase = FirebaseDatabase.getInstance();
+//                            databaseReference = firebaseDatabase.getReference().child(etPhoneNumber.getText().toString());
+//                            String keyUploadedImages = databaseReference.child("uploadedImages").push().getKey();
+//                            String keyFavImages = databaseReference.child("favImages").push().getKey();
 
-                            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            //sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            sharedPreferences = getSharedPreferences(KEY_PHONE_NUMBER, MODE);
                             editor = sharedPreferences.edit();
                             editor.putString(KEY_PHONE_NUMBER, etPhoneNumber.getText().toString());
-                            editor.putString(KEY_IMAGES_FAV, keyFavImages);
-                            editor.putString(KEY_IMAGES_UPLOADED, keyUploadedImages);
+                            editor.commit();
+//                            editor.putString(KEY_IMAGES_FAV, keyFavImages);
+//                            editor.putString(KEY_IMAGES_UPLOADED, keyUploadedImages);
 
 
                             FirebaseUser user = task.getResult().getUser();

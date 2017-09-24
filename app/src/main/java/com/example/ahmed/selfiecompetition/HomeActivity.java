@@ -140,11 +140,11 @@ public class HomeActivity extends AppCompatActivity {
     private Fragment getHomeFragment() {
         Fragment fragment = null;
         switch (navItemIndex) {
-            case 1:
+            case 0:
                 return new FragmentAllSelfies();
             case 2:
                 return new FragmentFavs();
-            case 0:
+            case 1:
                 return new FragmentAddNewSelfies();
             case 3:
                 return new FragmentUploadedImages();
@@ -175,7 +175,7 @@ public class HomeActivity extends AppCompatActivity {
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_ALL_SELFIES;
                         break;
-                    case R.id.nav_my_selfies:
+                    case R.id.nav_add_new_selfies:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_OWN_SELFIES;
                         break;

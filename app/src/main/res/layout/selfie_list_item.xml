@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlue2"
+    >
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:id="@+id/ivSelfie"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+
+        />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tvUploadedDate"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:layout_below="@id/ivSelfie"
+    android:text="4/4/2017"
+    android:textColor="@android:color/holo_purple"
+    android:padding="7dp"
+    android:background="@drawable/round_btn"
+
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="22+"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentRight="true"
+        android:id="@+id/likesCount"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivLikeDislike"
+        android:scaleType="centerCrop"
+        android:layout_toLeftOf="@id/likesCount"
+        android:src="@drawable/like"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        />
+
+</RelativeLayout>
